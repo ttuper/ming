@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -12,8 +13,15 @@ import (
 )
 
 func main() {
+	var (
+		configFile string
+	)
+	flag.StringVar(&configFile, "c", "", "Configuration file path.")
+	flag.StringVar(&configFile, "config", "", "Configuration file path.")
+	flag.Parse()
+
 	// 初始化配置
-	config.InitConfig()
+	config.InitConfig(configFile)
 	cfg := config.GetConfig()
 
 	// 初始化数据库连接
@@ -22,10 +30,10 @@ func main() {
 		return
 	}
 
-	if err := db.ConnectRedis(cfg); err != nil {
-		logger.Error(fmt.Sprintf("Failed to connect to Redis: %v", err))
-		return
-	}
+	//if err := db.ConnectRedis(cfg); err != nil {
+	//	logger.Error(fmt.Sprintf("Failed to connect to Redis: %v", err))
+	//	return
+	//}
 
 	// 初始化路由
 	r := gin.Default()

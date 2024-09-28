@@ -1,0 +1,8 @@
+mysql:
+  dsn: "ming:11186010@Ming@tcp(127.0.0.1:3306)/ming?charset=utf8mb4&parseTime=True&loc=Local"
+
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  password: ""
+  db: 0
