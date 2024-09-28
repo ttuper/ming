@@ -48,7 +48,7 @@ func main() {
 
 	fmt.Println("Listening on :80...")
 	logger.Info("Server started.")
-	if err := r.Run(":80"); err != nil {
+	if err := r.RunTLS(":443", "/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key"); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
 }
