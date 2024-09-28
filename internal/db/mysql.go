@@ -25,7 +25,6 @@ func ConnectMySQL(cfg *config.Config) error {
 			Colorful:                  true,        // Disable color
 		},
 	)
-	fmt.Println(newLogger)
 
 	dsn := cfg.MySQL.DSN
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
