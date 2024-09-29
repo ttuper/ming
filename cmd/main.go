@@ -72,11 +72,11 @@ func main() {
 	}
 
 	log.Println("Starting server...")
-	//if err := server.ListenAndServeTLS("/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key"); err != nil {
-	//	log.Fatalf("ListenAndServeTLS error: %v", err)
-	//}
-
-	if err := server.ListenAndServeTLS("/Users/zhangtiantian/Desktop/ztt/Project/ming/ssl/www.mingcy.fun.pem", "/Users/zhangtiantian/Desktop/ztt/Project/ming/ssl/www.mingcy.fun.key"); err != nil {
+	if err := server.ListenAndServeTLS("/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key"); err != nil {
 		log.Fatalf("ListenAndServeTLS error: %v", err)
 	}
+
+	//if err := server.ListenAndServeTLS("/Users/zhangtiantian/Desktop/ztt/Project/ming/ssl/www.mingcy.fun.pem", "/Users/zhangtiantian/Desktop/ztt/Project/ming/ssl/www.mingcy.fun.key"); err != nil {
+	//	log.Fatalf("ListenAndServeTLS error: %v", err)
+	//}
 }
