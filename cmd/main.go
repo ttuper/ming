@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,7 @@ import (
 	anime_service "ming/internal/service/anime"
 	"ming/pkg/config"
 	"ming/pkg/logger"
+	"net/http"
 )
 
 func main() {
@@ -46,9 +48,31 @@ func main() {
 		anime.GET("/detail/:anime_id", animeHandler.GetAnimeByID)
 	}
 
-	fmt.Println("Listening on :80...")
-	logger.Info("Server started.")
-	if err := r.RunTLS(":443", "/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key"); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
+	// 设置TLS配置
+	config := &tls.Config{
+		CipherSuites: []uint16{
+			tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, // 适用于2021年1月及之后的实例
+			// tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, // 可选，适用于2021年1月之前的实例
+			// tls.TLS_RSA_WITH_AES_128_CBC_SHA256,      // 可选，适用于2021年1月之前的实例
+		},
+		MinVersion:               tls.VersionTLS12,
+		PreferServerCipherSuites: true,
+	}
+
+	// 添加路由规则
+	r.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "Hello, World!")
+	})
+
+	// 启动HTTPS服务器
+	server := &http.Server{
+		Addr:      ":443",
+		Handler:   r,
+		TLSConfig: config,
+	}
+
+	log.Println("Starting server...")
+	if err := server.ListenAndServeTLS("/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key"); err != nil {
+		log.Fatalf("ListenAndServeTLS error: %v", err)
 	}
 }
