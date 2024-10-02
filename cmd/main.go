@@ -12,7 +12,12 @@ import (
 	"ming/pkg/config"
 	"ming/pkg/logger"
 	"net/http"
+	"os"
 )
+
+func init() {
+	os.Setenv("GODEBUG", "tlsrsakex=1")
+}
 
 func main() {
 	var (
