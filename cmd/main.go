@@ -1,15 +1,16 @@
 package main
 
 import (
+	"crypto/tls"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
 	"ming/internal/db"
 	anime_handler "ming/internal/handlers/anime"
 	anime_service "ming/internal/service/anime"
 	"ming/pkg/config"
 	"ming/pkg/logger"
+	"net/http"
 )
 
 func main() {
@@ -48,7 +49,34 @@ func main() {
 
 	fmt.Println("Listening on :443...")
 	logger.Info("Server started.")
-	if err := r.RunTLS(":443", "/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key"); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
+	//if err := r.RunTLS(":443", "/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key"); err != nil {
+	//	log.Fatalf("Failed to start server: %v", err)
+	//}
+
+	// 加载TLS配置
+	tlsCfg := &tls.Config{
+		CipherSuites: []uint16{
+			tls.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+			tls.TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+			tls.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+			tls.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+		},
+		PreferServerCipherSuites: true,
+		InsecureSkipVerify:       false,
+		MinVersion:               tls.VersionTLS12,
+		MaxVersion:               tls.VersionTLS13,
+	}
+
+	// 使用TLS配置创建一个TLS Listener
+	server := &http.Server{
+		Addr:      ":443", // 监听端口
+		Handler:   r,
+		TLSConfig: tlsCfg,
+	}
+
+	// 启动TLS服务器
+	err := server.ListenAndServeTLS("/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key")
+	if err != nil {
+		panic(err)
 	}
 }
