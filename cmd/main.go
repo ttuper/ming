@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -11,13 +10,7 @@ import (
 	anime_service "ming/internal/service/anime"
 	"ming/pkg/config"
 	"ming/pkg/logger"
-	"net/http"
-	"os"
 )
-
-func init() {
-	os.Setenv("GODEBUG", "tlsrsakex=1")
-}
 
 func main() {
 	var (
