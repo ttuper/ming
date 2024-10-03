@@ -51,7 +51,7 @@ func main() {
 	//}
 
 	// 1. 加载证书文件
-	certFile := "/etc/ssl/certs/aliyun-root-ca.crt"
+	certFile := "/root/ssl/aliyun-root-ca.cer"
 	certBytes, err := ioutil.ReadFile(certFile)
 	if err != nil {
 		log.Fatalf("Failed to read certificate file: %v", err)
