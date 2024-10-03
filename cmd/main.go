@@ -104,7 +104,7 @@ func main() {
 
 	// 7. 启动 HTTPS 服务
 	log.Println("Starting HTTPS server...")
-	err = server.ListenAndServeTLS("", "")
+	err = server.ListenAndServeTLS("/root/ssl/www.mingcy.fun.pem", "/root/ssl/www.mingcy.fun.key")
 	if err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Failed to start HTTPS server: %v", err)
 	}
