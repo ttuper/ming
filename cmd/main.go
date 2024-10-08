@@ -45,6 +45,14 @@ func main() {
 		anime.GET("/detail/:anime_id", animeHandler.GetAnimeByID)
 	}
 
+	// 启动HTTP服务
+	go func() {
+		fmt.Println("Starting HTTP server on :80")
+		if err := r.Run(":80"); err != nil {
+			log.Fatalf("Failed to start server: %v", err)
+		}
+	}()
+
 
 	fmt.Println("Listening on :443...")
 	logger.Info("Server started.")
