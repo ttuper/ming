@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"log"
 	"ming/internal/db"
@@ -36,10 +37,17 @@ func main() {
 	//}
 
 	r := gin.Default()
+	
+	// 允许跨域
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"https://www.mingcy.fun"} // 允许的域名
+	corsConfig.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	corsConfig.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization"}
+
 	animeService := anime_service.NewAnimeService()
 	animeHandler := anime_handler.NewAnimeHandler(animeService)
 
-	anime := r.Group("/anime")
+	anime := r.Group("/anime").Use(cors.New(corsConfig))
 	{
 		anime.GET("/list", animeHandler.GetAnimeList)
 		anime.GET("/detail/:anime_id", animeHandler.GetAnimeByID)
