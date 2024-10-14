@@ -3,9 +3,8 @@ package anime
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"strconv"
-
 	"net/http"
+	"strconv"
 )
 
 type detailRequest struct {
@@ -70,7 +69,7 @@ func (h *AnimeHandler) GetAnimeByID(c *gin.Context) {
 			resourceTypeName = "其他"
 		}
 		resourceListData = append(resourceListData, ResourceList{
-			Id: int32(v.ID),
+			Id:      int32(v.ID),
 			AnimeId: v.AnimeID,
 			Url:     v.Url,
 			Code:    v.Code,

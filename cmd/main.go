@@ -8,7 +8,9 @@ import (
 	"log"
 	"ming/internal/db"
 	anime_handler "ming/internal/handlers/anime"
+	feedback_handler "ming/internal/handlers/feedback"
 	anime_service "ming/internal/service/anime"
+	feedback_service "ming/internal/service/feedback"
 	"ming/pkg/config"
 	"ming/pkg/logger"
 )
@@ -51,10 +53,19 @@ func main() {
 	animeService := anime_service.NewAnimeService()
 	animeHandler := anime_handler.NewAnimeHandler(animeService)
 
+	// 动漫路由
 	anime := r.Group("/anime")
 	{
 		anime.GET("/list", animeHandler.GetAnimeList)
 		anime.GET("/detail/:anime_id", animeHandler.GetAnimeByID)
+	}
+
+	feedbackService := feedback_service.NewFeedbackService()
+	feedbackHandler := feedback_handler.NewFeedbackHandler(feedbackService)
+	// 反馈路由
+	feedback := r.Group("/feedback")
+	{
+		feedback.POST("/submit", feedbackHandler.SubmitFeedback)
 	}
 
 	// 启动HTTP服务
@@ -64,7 +75,6 @@ func main() {
 			log.Fatalf("Failed to start server: %v", err)
 		}
 	}()
-
 
 	fmt.Println("Listening on :443...")
 	logger.Info("Server started.")
