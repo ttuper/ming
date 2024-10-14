@@ -37,17 +37,21 @@ func main() {
 	//}
 
 	r := gin.Default()
-	
+
 	// 允许跨域
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowOrigins = []string{"https://www.mingcy.fun"} // 允许的域名
 	corsConfig.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	corsConfig.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization"}
+	r.Use(cors.New(corsConfig))
+
+	// 添加静态文件支持
+	r.Static("/images", "/root/www/mingcy-img")
 
 	animeService := anime_service.NewAnimeService()
 	animeHandler := anime_handler.NewAnimeHandler(animeService)
 
-	anime := r.Group("/anime").Use(cors.New(corsConfig))
+	anime := r.Group("/anime")
 	{
 		anime.GET("/list", animeHandler.GetAnimeList)
 		anime.GET("/detail/:anime_id", animeHandler.GetAnimeByID)
