@@ -53,9 +53,9 @@ func main () {
 		genres := record[3]
 		score := record[4]
 		releaseDate := record[5]
-		typeResource := record[6] // 资源类型
-		url := record[7]
-		code := record[8]
+		url := record[6]
+		code := record[7]
+		typeResource := record[8] // 资源类型
 
 		// 创建 Anime 记录
 		anime := models.Anime{

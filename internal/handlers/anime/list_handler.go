@@ -1,6 +1,7 @@
 package anime
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 	"net/http"
@@ -70,7 +71,7 @@ func (h *AnimeHandler) GetAnimeList(c *gin.Context) {
 		data := listData{
 			Id:          cast.ToInt(v.ID),
 			Title:       v.Title,
-			Poster:      v.Poster,
+			Poster:      fmt.Sprintf("%s%s.jpg", "https://www.mingcy.fun/images/", v.Poster),
 			Desc:        v.Desc,
 			Genres:      v.Genres,
 			ReleaseDate: v.ReleaseDate,

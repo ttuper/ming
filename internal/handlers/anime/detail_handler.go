@@ -1,6 +1,7 @@
 package anime
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
 
@@ -79,7 +80,7 @@ func (h *AnimeHandler) GetAnimeByID(c *gin.Context) {
 
 	res.Id = int32(id)
 	res.Title = anime.Title
-	res.Poster = anime.Poster
+	res.Poster = fmt.Sprintf("%s%s.jpg", "https://www.mingcy.fun/images/", anime.Poster)
 	res.Desc = anime.Desc
 	res.Genres = anime.Genres
 	res.ReleaseDate = anime.ReleaseDate
