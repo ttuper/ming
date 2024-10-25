@@ -1,5 +1,5 @@
 mysql:
-  dsn: "ming:11186010@Ming@tcp(113.44.69.87:3306)/ming?charset=utf8mb4&parseTime=True&loc=Local"
+  dsn: "ming:11186010@Ming@tcp(113.44.69.87:3306)/sweet_orange?charset=utf8mb4&parseTime=True&loc=Local"
 
 redis:
   host: "113.44.69.87"

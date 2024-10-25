@@ -7,10 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"ming/internal/db"
-	anime_handler "ming/internal/handlers/anime"
-	feedback_handler "ming/internal/handlers/feedback"
-	anime_service "ming/internal/service/anime"
-	feedback_service "ming/internal/service/feedback"
+	vaccine_handler "ming/internal/handlers/vaccine"
+	vaccine_service "ming/internal/service/vaccine"
 	"ming/pkg/config"
 	"ming/pkg/logger"
 )
@@ -48,24 +46,15 @@ func main() {
 	r.Use(cors.New(corsConfig))
 
 	// 添加静态文件支持
-	r.Static("/images", "/root/www/mingcy-img")
+	//r.Static("/images", "/root/www/mingcy-img")
 
-	animeService := anime_service.NewAnimeService()
-	animeHandler := anime_handler.NewAnimeHandler(animeService)
+	vaccineService := vaccine_service.NewVaccineService()
+	vaccineHandler := vaccine_handler.NewVaccineHandler(vaccineService)
 
-	// 动漫路由
-	anime := r.Group("/anime")
+	vaccine := r.Group("/vaccine")
 	{
-		anime.GET("/list", animeHandler.GetAnimeList)
-		anime.GET("/detail/:anime_id", animeHandler.GetAnimeByID)
-	}
-
-	feedbackService := feedback_service.NewFeedbackService()
-	feedbackHandler := feedback_handler.NewFeedbackHandler(feedbackService)
-	// 反馈路由
-	feedback := r.Group("/feedback")
-	{
-		feedback.POST("/submit", feedbackHandler.SubmitFeedback)
+		vaccine.GET("/list", vaccineHandler.GetVaccineList)
+		vaccine.GET("/detail/:vaccine_id", vaccineHandler.GetVaccineByID)
 	}
 
 	// 启动HTTP服务

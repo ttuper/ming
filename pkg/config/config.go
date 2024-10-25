@@ -30,7 +30,7 @@ var ConfigData *Config
 // InitConfig initializes the configuration using Viper and binds it to the Config structure.
 func InitConfig(configFile string) {
 	viper.SetConfigName(configFile)                        // name of config file (without extension)
-	viper.AddConfigPath("./config/")                       // path to look for the config file in
+	viper.AddConfigPath("../config/")                      // path to look for the config file in
 	viper.SetConfigType("yaml")                            // REQUIRED if the config file does not have the extension in the name
 	viper.SetEnvPrefix("ming")                             // prefix to use when reading environment variables
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_")) // replace dots with underscores in env vars
